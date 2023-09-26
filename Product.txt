@@ -1,0 +1,31 @@
+# Product Entity Documentation
+
+## Section 1: Overview
+
+The `Product` entity is a part of the `com.hashedin.migration.entity` package. It represents a product with its unique ID, name, and description.
+
+## Section 2: Fields Details
+
+| Field | Type | Length | Nullable | Description |
+|-------|------|--------|----------|-------------|
+| id | Long | - | - | The unique identifier of the product. It is auto-generated. |
+| name | String | 200 | false | The name of the product. It cannot be null. |
+| description | String | 255 | false | The description of the product. It cannot be null. |
+
+### Validation Rules
+
+- The `name` field cannot be null and its maximum length is 200 characters.
+- The `description` field cannot be null and its maximum length is 255 characters.
+
+## Section 3: Operations
+
+The `Product` entity supports the following operations:
+
+- `getId()`: Returns the ID of the product.
+- `setId(Long id)`: Sets the ID of the product.
+- `getName()`: Returns the name of the product.
+- `setName(String name)`: Sets the name of the product.
+- `getDescription()`: Returns the description of the product.
+- `setDescription(String description)`: Sets the description of the product.
+
+Please note that there are no named queries defined for this entity.

@@ -1,0 +1,29 @@
+# User Entity Documentation
+
+## Section 1: Overview
+
+The `User` entity is a part of the `com.hashedin.migration.entity` package. It represents a user in the system with fields for id, username, password, and email. The entity is mapped to the `USER` table in the database.
+
+## Section 2: Fields Details
+
+| Field | Type | Length | Nullable | Description |
+|-------|------|--------|----------|-------------|
+| id | Long | - | - | The unique identifier for the user. It is auto-generated. |
+| username | String | 200 | No | The username of the user. It cannot be null. |
+| password | String | 255 | No | The password of the user. It cannot be null. |
+| email | String | 255 | No | The email of the user. It cannot be null. |
+
+## Section 3: Operations
+
+The `User` entity supports the following operations:
+
+- `getId()`: Returns the id of the user.
+- `setId(Long id)`: Sets the id of the user.
+- `getUsername()`: Returns the username of the user.
+- `setUsername(String username)`: Sets the username of the user.
+- `getPassword()`: Returns the password of the user.
+- `setPassword(String password)`: Sets the password of the user.
+- `getEmail()`: Returns the email of the user.
+- `setEmail(String email)`: Sets the email of the user.
+
+Note: The `User` entity does not have any named queries defined.

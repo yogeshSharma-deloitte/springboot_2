@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Code Migration Report</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            margin: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+        }
+
+        ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+}
+
+        /* Style for the button */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* Style for the button on hover */
+        button:hover {
+            background-color: #45a049;
+        }
+        .hidden { display: none; }  
+        .show { display: block; }  
+    </style>
+</head>
+<body>
+  <div id="normal_div" class="show">
+    <h1>Code Migration Report</h1>
+    <pre><table><tr><th>EJB File</th><th>SpringBoot File</th><th>Component</th></tr><tr><td>User.java</td><td>User.java</td><td>entity</td></tr><tr><td>Product.java</td><td>Product.java</td><td>entity</td></tr><tr><td>ProductEJB.java</td><td>ProductRepository.java</td><td>JPA Repository</td></tr><tr><td>UserEJB.java</td><td>UserRepository.java</td><td>JPA Repository</td></tr><tr><td>UserBean.java</td><td>UserService.java</td><td>service</td></tr><tr><td>UserServlet.java</td><td>UserController.java</td><td>controller</td></tr><tr><td>ProductServlet.java</td><td>ProductController.java</td><td>controller</td></tr></table></pre>
+    <h1>Build Result</h1>
+    <pre></pre>
+    <!-- Add a button with an onclick event -->
+    <button id="callPythonApi">Fetch Recommendations</button>
+    <h1>Build Jococo report</h1>
+    <pre></pre>
+    <h1>Sonar Result</h1>
+    <pre>You can find the Sonar report in below URL:
+
+ </pre>
+  </div>
+  <div id="improvements" class="hidden">
+    <h1>Recommendations Report</h1>
+    <h1> Build Error</h1>
+    <pre></pre>
+    <h1>Recommendations</h1>
+   <div>
+    <ul id="listContainer">
+      <!-- List items will be rendered here -->
+      </ul>
+   </div>  
+</div>
+
+
+<script>
+  
+  document.getElementById("callPythonApi").addEventListener("click", function () {
+    // Get the build_content variable
+    var buildContent = ``;
+
+    // Construct the URL
+    var apiUrl = "http://localhost:8000/ejb-springboot/ask_suggestion";
+
+    // Create a new XMLHttpRequest instance
+    var xhr = new XMLHttpRequest();
+    
+    // Configure the request as a POST request
+    xhr.open("POST", apiUrl, true);
+
+    // Set the Content-Type header to indicate JSON data in the request body
+    xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+    // Define the data to send in the request body as a JavaScript object
+    var requestData = {
+      build_result: buildContent
+    };
+
+    // Convert the requestData object to a JSON string
+    var requestBody = JSON.stringify(requestData);
+
+    // Set up an event handler to handle the response
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+                // Handle the successful response from the server
+                //console.log(xhr.responseText);
+                //const apiResponseDiv = document.getElementById('apiResponseDiv'); 
+                //apiResponseDiv.style.display = 'block';  
+                //apiResponseDiv.innerHTML = JSON.stringify(xhr.responseText, null, 2);
+                document.getElementById('improvements').classList.remove('hidden');
+                document.getElementById('normal_div').classList.remove('show');
+                document.getElementById('normal_div').classList.add('hidden');
+
+                var b = JSON.parse(xhr.responseText)['improvements'];
+                console.log(b)
+                var c = b.split('\n');
+                var listContainer = document.getElementById('listContainer');
+                c.forEach(function (item) {
+                  console.log(item + '\n');
+                  const listItem = document.createElement('li');
+                  listItem.textContent = item;
+                  listContainer.appendChild(listItem);
+                });
+                
+            } else {
+                // Handle errors or other status codes here
+                console.error("Request failed with status: " + xhr.status);
+                alert("Failed to call Python API.");
+            }
+        }
+    };
+
+    // Send the POST request with the JSON data in the request body
+    xhr.send(requestBody);
+});
+</script>
+</body>
+</html>
